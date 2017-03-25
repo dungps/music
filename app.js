@@ -259,7 +259,4 @@ app.get('/api/charts', function(req,res,next) {
 	}
 })
 
-var port = process.env.PORT || 3000;
-app.listen(port, function () {
-	console.log('Server is running.' + port);
-});
+http.createServer( app ).listen( process.env.PORT, '0.0.0.0' );

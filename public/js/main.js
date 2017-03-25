@@ -3,10 +3,10 @@
 
 module.exports = {
 	site: {
-		home: 'http://localhost:3000'
+		home: 'http://music.dungps.com'
 	}
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkQ6L25vZGVqcy9tdXNpYy9jb25maWcuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxNQUFNLENBQUMsT0FBTyxHQUFHO0FBQ2hCLEtBQUksRUFBRTtBQUNMLE1BQUksRUFBRSx1QkFBdUI7RUFDN0I7Q0FDRCxDQUFBIiwiZmlsZSI6IkQ6L25vZGVqcy9tdXNpYy9jb25maWcuanMiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHtcblx0c2l0ZToge1xuXHRcdGhvbWU6ICdodHRwOi8vbG9jYWxob3N0OjMwMDAnXG5cdH1cbn0iXX0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkQ6L25vZGVqcy9tdXNpYy9jb25maWcuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxNQUFNLENBQUMsT0FBTyxHQUFHO0FBQ2hCLEtBQUksRUFBRTtBQUNMLE1BQUksRUFBRSx5QkFBeUI7RUFDL0I7Q0FDRCxDQUFBIiwiZmlsZSI6IkQ6L25vZGVqcy9tdXNpYy9jb25maWcuanMiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHtcblx0c2l0ZToge1xuXHRcdGhvbWU6ICdodHRwOi8vbXVzaWMuZHVuZ3BzLmNvbSdcblx0fVxufSJdfQ==
 },{}],2:[function(require,module,exports){
 ;(function () {
 
