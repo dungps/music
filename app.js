@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var reactViews = require('express-react-views');
 var bodyParser = require('body-parser');
@@ -19,6 +20,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function (req, res) {
 	var initialState = {
 		title: "Music",
+		home_url: process.env.HOME_URL
 	};
 	res.render('Html', { data: initialState });
 });
@@ -38,8 +40,8 @@ app.get('/api/search', function(req,res,next){
 							json.push({
 								name: value.name,
 								id: value.id,
-								link: url.resolve(config.site.home, 'api/playback/' + value.id),
-								image: url.resolve(config.site.home, 'api/image/' + value.id),
+								link: url.resolve(process.env.HOME_URL, 'api/playback/' + value.id),
+								image: url.resolve(process.env.HOME_URL, 'api/image/' + value.id),
 							})
 						})
 						res.status(200).json(json);
@@ -80,31 +82,31 @@ app.get('/api/song/:id', function(req,res,next) {
 						title: resp.body.title,
 						source: {},
 						download: {},
-						thumb: url.resolve(config.site.home, "/api/image/" + resp.body.song_id_encode )
+						thumb: url.resolve(process.env.HOME_URL, "/api/image/" + resp.body.song_id_encode )
 					}
 
 					if ( body.source['128'] ) {
-						data.source['128'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=128" );
+						data.source['128'] = url.resolve(process.env.HOME_URL, "/api/playback/" + resp.body.song_id_encode + "?p=128" );
 					}
 
 					if ( body.source['320'] ) {
-						data.source['320'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=320");
+						data.source['320'] = url.resolve(process.env.HOME_URL, "/api/playback/" + resp.body.song_id_encode + "?p=320");
 					}
 
 					if ( body.source['lossless'] ) {
-						data.source['lossless'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=lossless");
+						data.source['lossless'] = url.resolve(process.env.HOME_URL, "/api/playback/" + resp.body.song_id_encode + "?p=lossless");
 					}
 
 					if ( body.link_download['128'] ) {
-						data.download['128'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=128");
+						data.download['128'] = url.resolve(process.env.HOME_URL, "/api/download/" + resp.body.song_id_encode + "?p=128");
 					}
 
 					if ( body.link_download['320'] ) {
-						data.download['320'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=320");
+						data.download['320'] = url.resolve(process.env.HOME_URL, "/api/download/" + resp.body.song_id_encode + "?p=320");
 					}
 
 					if ( body.link_download['lossless'] ) {
-						data.download['lossless'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=lossless");
+						data.download['lossless'] = url.resolve(process.env.HOME_URL, "/api/download/" + resp.body.song_id_encode + "?p=lossless");
 					}
 
 					res.status(200).json(data);
@@ -233,8 +235,8 @@ app.get('/api/charts', function(req,res,next) {
 						data.push({
 							id: v.id,
 							name: v.name,
-							thumb: url.resolve(config.site.home, 'api/image/' + v.id ),
-							link: url.resolve(config.site.home, 'api/playback/' + v.id),
+							thumb: url.resolve(process.env.HOME_URL, 'api/image/' + v.id ),
+							link: url.resolve(process.env.HOME_URL, 'api/playback/' + v.id),
 							singer: v.artists[0].name
 						})
 					})

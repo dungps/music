@@ -28,11 +28,11 @@ class Content extends React.Component {
 	render() {
 		return(
 			<div>
-				<Header onSelectMusic={this.onSelectMusic} />
+				<Header onSelectMusic={this.onSelectMusic}/>
 				<div className="charts">
 					<Charts onSelectMusic={this.onSelectMusic}/>
 				</div>
-				<Audio data={this.state.player} />
+				<Audio data={this.state.player}/>
 			</div>
 		);
 	}
