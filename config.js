@@ -1,5 +1,5 @@
 module.exports = {
 	site: {
-		home: process.env.HOME_URL
+		home: 'http://music.dungps.com'
 	}
 }
