@@ -1,0 +1,24 @@
+{
+  "name": "music",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "scripts": {
+    "heroku-prebuild": "npm install",
+    "start": "browserify -t babelify --standalone main views/main.js -o public/js/main.js & node app.js"
+  },
+  "dependencies": {
+    "babelify": "^6.3.0",
+    "body-parser": "^1.17.1",
+    "browserify": "^8.0.3",
+    "express": "^4.10.6",
+    "express-react-views": "^0.10.2",
+    "got": "^6.7.1",
+    "lodash": "^4.17.4",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "request": "^2.81.0",
+    "url": "^0.11.0"
+  }
+}
