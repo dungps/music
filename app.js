@@ -6,6 +6,7 @@ var url = require('url');
 var config = require('./config');
 var got = require('got');
 var request = require('request');
+var http = require('http');
 
 var app = express();
 
