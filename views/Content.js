@@ -15,7 +15,8 @@ class Content extends React.Component {
 				thumb: '',
 				name: '',
 				hidden: true,
-				play: false
+				play: false,
+				progress: 0
 			}
 		}
 	}
