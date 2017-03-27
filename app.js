@@ -145,12 +145,19 @@ app.get('/api/playback/:id', function(req,res,next) {
 					resp.body = JSON.parse(resp.body);
 					if ( !_.isEmpty( resp.body.source ) ) {
 						got.stream(resp.body.source[qty])
+							.on('response', function(response) {
+								console.log(response.elapsedTime);
+							})
+							.on('error', function(error) {
+								console.log(error);
+							})
 							.pipe(res);
 					} else {
 						res.status(404).send('Not Found');
 					}
 				})
 				.catch(function(err) {
+					console.log(err);
 					res.status(404).send('Not Found');
 				})
 		} else {
