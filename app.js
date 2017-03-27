@@ -141,11 +141,8 @@ app.get('/api/playback/:id', function(req,res,next) {
 			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
-					if ( resp.statusCode == 200 && !_.isEmpty( resp.body.source ) ) {
+					if ( !_.isEmpty( resp.body.source ) ) {
 						got.stream(resp.body.source[qty])
-							.then(function(response) {
-								console.log(response);
-							})
 							.pipe(res);
 					} else {
 						res.status(404).send('Not Found');
@@ -169,7 +166,7 @@ app.get('/api/download/:id', function(req,res,next) {
 			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
-					if ( resp.statusCode == 200 && !_.isEmpty( resp.body.source ) ) {
+					if ( !_.isEmpty( resp.body.source ) ) {
 						res.attachment( resp.body.title + '.mp3');
 						got.stream(resp.body.source[qty]).pipe(res);
 					} else {
