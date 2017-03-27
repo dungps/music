@@ -71,14 +71,12 @@ app.get('/api/search', cache('1 day'), function(req,res,next){
 	}
 })
 
-app.get('/api/song/:id', cache('1 day'), function(req,res,next) {
+app.get('/api/song/:id', function(req,res,next) {
 	try {
 		if (req.params.id) {
-			var qty = req.query.qty || '128';
 			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 				resp.body = JSON.parse(resp.body);
-				// res.send(resp.body);
 				if ( !_.isEmpty( resp.body ) ) {
 					let data = {
 						ID: resp.body.song_id_encode,
@@ -116,7 +114,7 @@ app.get('/api/song/:id', cache('1 day'), function(req,res,next) {
 				} else {
 					res.status(200).json({
 						error: true,
-						message: 'ahihi'
+						message: 'Không tìm thấy'
 					})
 				}
 			})
@@ -142,10 +140,10 @@ app.get('/api/playback/:id', function(req,res,next) {
 	try {
 		if (req.params.id) {
 			var qty = req.query.p || '128';
-			got(url.resolve(config.site.home, '/api/song/' + req.params.id ))
+			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
-					if ( !resp.body.error ) {
+					if ( !_.isEmpty( resp.body.source ) ) {
 						got.stream(resp.body.source[qty])
 							.pipe(res);
 					} else {
