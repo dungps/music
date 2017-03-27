@@ -142,7 +142,11 @@ app.get('/api/playback/:id', function(req,res,next) {
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
 					if ( resp.statusCode == 200 && !_.isEmpty( resp.body.source ) ) {
-						got.stream(resp.body.source[qty]).pipe(res);
+						got.stream(resp.body.source[qty])
+							.then(function(response) {
+								console.log(response);
+							})
+							.pipe(res);
 					} else {
 						res.status(404).send('Not Found');
 					}
