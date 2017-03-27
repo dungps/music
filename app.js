@@ -141,6 +141,7 @@ app.get('/api/playback/:id', function(req,res,next) {
 			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
+					console.log(resp);
 					if ( resp.statusCode == 200 && !_.isEmpty( resp.body.source ) ) {
 						request(resp.body.source[qty]).pipe(res);
 					} else {
@@ -258,6 +259,8 @@ app.get('/api/charts', function(req,res,next) {
 	} catch(e) {
 		next(e);
 	}
-})
+});
 
+process.env.PORT = process.env.PORT || 3000;
 http.createServer( app ).listen( process.env.PORT, '0.0.0.0' );
+console.log('Server is running.');
