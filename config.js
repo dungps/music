@@ -1,6 +1,6 @@
 module.exports = {
 	site: {
-		home: 'http://music.dungps.com',
+		home: 'http://localhost:3000',
 		host: 'music.dungps.com',
 		port: process.env.PORT
 	}

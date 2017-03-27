@@ -71,14 +71,15 @@ app.get('/api/search', cache('1 day'), function(req,res,next){
 	}
 })
 
-app.get('/api/song/:id', function(req,res,next) {
+app.get('/api/song/:id', cache('1 day'), function(req,res,next) {
 	try {
 		if (req.params.id) {
 			var qty = req.query.qty || '128';
 			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
 				.then(function(resp) {
 				resp.body = JSON.parse(resp.body);
-				if ( resp.statusCode == 200 && resp.body.song_id ) {
+				// res.send(resp.body);
+				if ( !_.isEmpty( resp.body ) ) {
 					let data = {
 						ID: resp.body.song_id_encode,
 						title: resp.body.title,
@@ -87,27 +88,27 @@ app.get('/api/song/:id', function(req,res,next) {
 						thumb: url.resolve(config.site.home, "/api/image/" + resp.body.song_id_encode )
 					}
 
-					if ( body.source['128'] ) {
+					if ( resp.body.source['128'] ) {
 						data.source['128'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=128" );
 					}
 
-					if ( body.source['320'] ) {
+					if ( resp.body.source['320'] ) {
 						data.source['320'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=320");
 					}
 
-					if ( body.source['lossless'] ) {
+					if ( resp.body.source['lossless'] ) {
 						data.source['lossless'] = url.resolve(config.site.home, "/api/playback/" + resp.body.song_id_encode + "?p=lossless");
 					}
 
-					if ( body.link_download['128'] ) {
+					if ( resp.body.link_download['128'] ) {
 						data.download['128'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=128");
 					}
 
-					if ( body.link_download['320'] ) {
+					if ( resp.body.link_download['320'] ) {
 						data.download['320'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=320");
 					}
 
-					if ( body.link_download['lossless'] ) {
+					if ( resp.body.link_download['lossless'] ) {
 						data.download['lossless'] = url.resolve(config.site.home, "/api/download/" + resp.body.song_id_encode + "?p=lossless");
 					}
 
@@ -115,11 +116,12 @@ app.get('/api/song/:id', function(req,res,next) {
 				} else {
 					res.status(200).json({
 						error: true,
-						message: 'Không tìm thấy!'
+						message: 'ahihi'
 					})
 				}
 			})
 			.catch(function(error) {
+				console.log(error);
 				res.status(200).json({
 					error: true,
 					message: 'Không tìm thấy!'
@@ -140,10 +142,10 @@ app.get('/api/playback/:id', function(req,res,next) {
 	try {
 		if (req.params.id) {
 			var qty = req.query.p || '128';
-			got('/api/song/' + req.params.id )
+			got(url.resolve(config.site.home, '/api/song/' + req.params.id ))
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
-					if ( !_.isEmpty( resp.body.source ) ) {
+					if ( !resp.body.error ) {
 						got.stream(resp.body.source[qty])
 							.pipe(res);
 					} else {
@@ -157,6 +159,7 @@ app.get('/api/playback/:id', function(req,res,next) {
 			res.status(404).send('Not Found');
 		}
 	} catch(e) {
+		console.log(e);
 		next(e);
 	}
 })
