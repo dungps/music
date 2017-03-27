@@ -7,8 +7,10 @@ var config = require('./config');
 var got = require('got');
 var request = require('request');
 var http = require('http');
+var apicache = require('apicache');
 
 var app = express();
+var cache = apicache.middleware;
 
 app.set('view engine', 'js');
 app.engine('js', reactViews.createEngine());
@@ -25,7 +27,7 @@ app.get('/', function (req, res) {
 	res.render('Html', { data: initialState });
 });
 
-app.get('/api/search', function(req,res,next){
+app.get('/api/search', cache('1 day'), function(req,res,next){
 	try {
 		if ( !_.isEmpty( req.query.q ) ) {
 			got('http://ac.mp3.zing.vn/complete/desktop?type=song&num=5&query=' + encodeURIComponent( req.query.q ))
@@ -138,7 +140,7 @@ app.get('/api/playback/:id', function(req,res,next) {
 	try {
 		if (req.params.id) {
 			var qty = req.query.p || '128';
-			got('http://api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata=%7B%22id%22:%22'+ req.params.id +'%22%7D')
+			got('/api/song/' + req.params.id )
 				.then(function(resp) {
 					resp.body = JSON.parse(resp.body);
 					if ( !_.isEmpty( resp.body.source ) ) {
@@ -207,7 +209,7 @@ app.get('/api/image/:id', function(req,res,next){
 	}
 })
 
-app.get('/api/charts', function(req,res,next) {
+app.get('/api/charts', cache('1 day'), function(req,res,next) {
 	try {
 		var id = 'IWZ9Z08I';
 		switch (req.query.id) {

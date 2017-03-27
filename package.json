@@ -9,6 +9,7 @@
     "start": "browserify -t babelify --standalone main views/main.js -o public/js/main.js & node app.js"
   },
   "dependencies": {
+    "apicache": "^0.8.4",
     "babelify": "^6.3.0",
     "body-parser": "^1.17.1",
     "browserify": "^8.0.3",
